@@ -3,7 +3,8 @@ import './Header.css'
 import AddIcon from '@material-ui/icons/Add';
 import CreateProject from './CreateProject';
 import CreatePost from './CreatePost';
-
+import { Link } from 'react-router-dom';
+import { Button } from '@material-ui/core';
 function Header() {
     const emails = ['username@gmail.com', 'user02@gmail.com'];
     const [open1, setOpen1] = React.useState(false);
@@ -17,11 +18,9 @@ function Header() {
       };
     
     return (
-        <div style={{display:'flex'}}>
-            <button onClick={() => setOpen1(true)} id='btn1'><AddIcon fontSize='large' />Create Project</button>
-            <button onClick={() => setOpen2(true)} id='btn2'><AddIcon fontSize='large' />Create Post</button>
-            <CreateProject selectedValue={selectedValue} open={open1} onClose={handleClose} setOpen1={setOpen1}/>
-            <CreatePost  selectedValue={selectedValue} open={open2} onClose={handleClose}/>
+        <div style={{display:'flex',justifyContent:'center'}}>
+            <Button component={Link} to='/create_project' id='btn1'><AddIcon fontSize='large' />Create Project</Button>
+            
         </div>
     )
 }

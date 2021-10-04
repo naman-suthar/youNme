@@ -1,4 +1,5 @@
 import React,{useEffect, useContext} from 'react'
+import { projectFirestore } from '../firebase/Firestorage';
 import { Paper, Button, Container, Avatar} from '@material-ui/core'
 import useStyles from './styles'
 // import app from '../firebase/Firebase';
@@ -6,12 +7,14 @@ import { getAuth, signInWithPopup, GoogleAuthProvider,onAuthStateChanged,signOut
 import { UserContext } from '../../context/UserContext.js';
 import Logo from '../../images/youNme_Logo.png';
 import {ImGoogle} from 'react-icons/im'
+
 function Auth() {
     const classes = useStyles();
     const [user,setUser] = useContext(UserContext)
     
     
-    const onSubmit = () =>{
+    const onSubmit = (e) =>{
+        e.preventDefault();
         const provider = new GoogleAuthProvider();
         const auth = getAuth();
 signInWithPopup(auth, provider)
@@ -21,7 +24,12 @@ signInWithPopup(auth, provider)
     const token = credential.accessToken;
     // The signed-in user info.
     const user = result.user;
-    
+    projectFirestore.collection('users').doc(user.uid).set({
+      name: user.displayName,
+      email: user.email,
+      photoUrl: user.photoURL,
+      projects:[]
+    });
   }).catch((error) => {
     console.log(error);
   });
@@ -37,6 +45,7 @@ useEffect(()=>{
         console.log("user Signed in");
         console.log(user);
         setUser(user);
+        
       } 
     });
 },[]);

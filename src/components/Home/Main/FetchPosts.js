@@ -4,6 +4,7 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import Post from './Post/Post';
 import PostCard from '../../PostCard/PostCard';
 import { Typography } from '@material-ui/core';
+import { Link } from 'react-router-dom';
 function FetchPosts() {
     const [items,setItems] = useState([]);
     const style = {
@@ -33,8 +34,7 @@ function FetchPosts() {
   
         return (
         <div>
-        <h1 style={{color: '#fefefe'}}>Posts</h1>
-        <hr />
+        
         {/* {
           items.map(entry => (
             <div style={style} >
@@ -48,15 +48,42 @@ function FetchPosts() {
             </div>
           ))
         } */}
-        <p className="display-6"> Projects Near you</p>
+        <div className="proj_section">
+        <p className="proj_title"> Projects Near you</p>
         <div className="d-flex">
+        <PostCard />
+        <PostCard />
+        <PostCard />
         <PostCard/>
-        <PostCard/>
+        </div>
        
        
         </div>
         
-      
+        <div className="proj_section">
+        <p className="proj_title">Top Free Projects</p>
+        <div className="d-flex" >
+        <PostCard/>
+        <PostCard/>
+        <PostCard/>
+        <PostCard/>
+       
+        </div>
+       
+       
+        </div>
+        <div className="proj_section">
+        <p className="proj_title">Top Paid Projects</p>
+        <div className="d-flex" >
+        <PostCard/>
+        <PostCard/>
+        <PostCard/>
+        <PostCard/>
+       
+        </div>
+       
+       
+        </div>
       </div>
     );
 }

@@ -4,10 +4,12 @@ import Visibility from '@material-ui/icons/Visibility'
 import VisibilityOff from '@material-ui/icons/VisibilityOff'
 
 
-function Input({ name,handleChange, label, half, autoFocus, type, handleShowPassword}) {
+function Input({ value,name,handleChange, label, half, autoFocus, type, handleShowPassword,placeholder}) {
     return (
         <Grid item xs={12} sm={half ? 6:12}>
             <TextField
+                value={value}
+                placeholder={placeholder}
                 name={name}
                 onChange={handleChange}
                 variant="outlined"

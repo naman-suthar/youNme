@@ -44,9 +44,9 @@ function Profile() {
     return (
         <div style={{position:'relative',top:'80px',color:'#fefefe',display:'flex'}}>
             <div style={{width:'20vw',marginLeft:'10vh'}}>
-                <img src={user.photoURL} alt='Profile picture' width='100%'/>
+                <img src={user.photoURL} alt='Profile picture' width='100%' style={{borderRadius:'50%'}}/>
                 
-            <div style={{display:'flex',flexDirection:'column',justifyItem:'center',alignItems:'center',marginTop:'5vh'}}>
+            <div style={{display:'flex',flexDirection:'column',justifyItem:'center',alignItems:'center',marginTop:'5vh',color:'black'}}>
                 <h2>{profile.name}</h2>
                 <Typography >{profile.profession} </Typography>
                 <Typography>{profile.age}</Typography>
@@ -56,7 +56,7 @@ function Profile() {
                 </Typography>
             </div>
         </div>
-        <div style={{width:'55vw',marginLeft:'2vh'}}>
+        <div  style={{width:'55vw',marginLeft:'15vh'}}>
             <Header />
             <Gallery />
             {/* <Button variant='outlined' color='inherit' onClick={saveProfile}>Save </Button> */}

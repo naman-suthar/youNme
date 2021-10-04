@@ -30,16 +30,21 @@ body{
 }
 
 /* upload form styles */
-form{
+.imageForm{
   margin: 30px auto 10px;
   text-align: center;
+  
 }
-label input{
+.proj_img{
+  height: 50px;
+}
+
+.imageForm label input{
   height: 0;
   width: 0;
   opacity: 0;
 }
-label{
+.imageForm label{
   display: flex;
   width: 30px;
   height: 30px;
@@ -52,11 +57,11 @@ label{
   font-size: 24px;
 
 }
-label:hover{
+.imageForm label:hover{
   background: var(--primary);
   color: white;
 }
-label span {
+.imageForm label span {
   align-self: center;
 }
 .output{

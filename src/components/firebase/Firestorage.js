@@ -1,4 +1,5 @@
 import firebase from 'firebase/compat/app';
+import 'firebase/auth'
 import 'firebase/compat/storage';
 import 'firebase/compat/firestore';
 
@@ -12,14 +13,11 @@ const firebaseConfig = {
     appId: "1:989739474876:web:7214187e6effcce70995b9"
   };
 
-// Initialize Firebase
-if (!firebase.apps.length) {
-    firebase.initializeApp(firebaseConfig)
-  }
-  
+export const app = firebase.initializeApp(firebaseConfig);
 
-const projectStorage = firebase.storage();
-const projectFirestore = firebase.firestore();
-const timestamp = firebase.firestore.FieldValue.serverTimestamp;
+export const projectStorage = firebase.storage();
+export const projectFirestore = firebase.firestore();
+export const timestamp = firebase.firestore.FieldValue.serverTimestamp;
 
-export { projectStorage, projectFirestore, timestamp };
+
+
