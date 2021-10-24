@@ -7,7 +7,7 @@ import { getAuth, signInWithPopup, GoogleAuthProvider,onAuthStateChanged,signOut
 import { UserContext } from '../../context/UserContext.js';
 import Logo from '../../images/youNme_Logo.png';
 import {ImGoogle} from 'react-icons/im'
-
+import {getDocs,collection, doc} from 'firebase/firestore'
 function Auth() {
     const classes = useStyles();
     const [user,setUser] = useContext(UserContext)
@@ -23,13 +23,14 @@ signInWithPopup(auth, provider)
     const credential = GoogleAuthProvider.credentialFromResult(result);
     const token = credential.accessToken;
     // The signed-in user info.
-    const user = result.user;
+    const user = result.user;  
     projectFirestore.collection('users').doc(user.uid).set({
-      name: user.displayName,
-      email: user.email,
-      photoUrl: user.photoURL,
-      projects:[]
-    });
+                name: user.displayName,
+                email: user.email,
+                photoUrl: user.photoURL,
+                projects:[]
+              },{merge: true});
+   
   }).catch((error) => {
     console.log(error);
   });

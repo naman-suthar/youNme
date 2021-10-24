@@ -1,8 +1,7 @@
-import { Container, Grow, Typography } from '@material-ui/core'
+import { Grow } from '@material-ui/core'
 import React from 'react'
 import Feeds from './Main/Feeds'
-import TopCreators from './TopCreators'
-import TopStories from './TopStories'
+
 function Home() {
     return (
         <Grow in>

@@ -7,9 +7,12 @@ import Title from './comps/Title';
 function Gallery() {
     const [selectedImg, setSelectedImg] = useState(null);
     return (
-        <div className="App">
-            <Title/>
+        <div className="App" style={{color:'#000'}}>
+          <div style={{display:'flex',height:'80px'}}>
+          <Title/>
       <UploadForm />
+          </div>
+            
       <ImageGrid setSelectedImg={setSelectedImg} />
       { selectedImg && (
         <Modal selectedImg={selectedImg} setSelectedImg={setSelectedImg} />

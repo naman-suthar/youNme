@@ -3,29 +3,31 @@ import { Button, Card, CardActionArea, CardActions, CardContent, CardMedia, Typo
 import Logo from '../../images/youNme_Logo.png'
 import CollabBtn from './CollabBtn';
 import { Link } from 'react-router-dom';
-const PostCard = () => {
+const PostCard = ({project,key}) => {
+    
+    
   return (
-    <Card component={Link} to='/project_desc' style={{width: '300px',height: '350px',textDecoration:'none'}} className="mx-3">
+    <Card  style={{width: '300px',height: '350px'}} className="mx-3">
       <CardMedia
         component="img"
         alt="green iguana"
         height="140"
-        image={Logo}
+        image={project.proj_img}
       />
-      <CardContent>
+      <CardContent component={Link} to={`/project_desc/${project.id}`} style={{textDecoration:'none',color:'#000'}}>
         <Typography gutterBottom variant="h6" component="div">
-          Lizard- The Action movie
+          {project.proj_name}
         </Typography>
         <Typography variant="body2" color="secondary">
-         Rs.250
+         Rs. {project.proj_price}
         </Typography>
         <Typography variant="body2" color="secondary">
-         Members: 3/10
+         Members: {3}/{project.proj_members}
         </Typography>
       </CardContent>
       <CardActions>
         <Button size="small">Share</Button>
-        <CollabBtn/>
+        <CollabBtn id={project.id} type={project.proj_price}/>
       </CardActions>
     </Card>
   );

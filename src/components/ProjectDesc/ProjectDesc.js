@@ -1,64 +1,106 @@
 import { Avatar, Button, List, ListItem, ListItemAvatar, ListItemText } from '@material-ui/core'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Cover from '../../images/cover.jpg'
 import PersonIcon from '@material-ui/icons/Person'
 import CollabBtn from '../PostCard/CollabBtn'
-const ProjectDesc = () => {
+import { projectFirestore } from '../firebase/Firestorage';
+import {doc,getDoc,getDocs,collection} from 'firebase/firestore'
+const ProjectDesc = ({ match, location }) => {
+    const {params: {proj_id}} = match;
+    const [project,setProject] = useState(null);
+    const [creator,setCreator] = useState(null);
+    const [members,setMembers] = useState([]);
+    const proj_ref = projectFirestore.collection("free_Projects").doc(proj_id);
+    useEffect(async()=>{
+        await proj_ref.get().then((res)=>{
+            setProject(res.data())
+            getCreator(res.data())  
+    })
+    
+    },[]);
+   
+       
+    
+    const getCreator = async(project) =>{
+        const creator_ref = doc(projectFirestore,"users",`${project.uid}`)
+        const docSnap = await getDoc(creator_ref);
+        if(docSnap.exists()){
+            setCreator(docSnap.data());
+            
+        }else{
+            console.log("didnt get");
+        }
+    }
+    const getMembers = async (project) => {
+        const querySnapshot = await getDocs(collection(projectFirestore, "users"));
+        querySnapshot.forEach((doc) => {
+        project.members_id.forEach( uid => {
+            if(uid === doc.id){
+                console.log(`${uid} => ${doc.id}`);
+                let membersList = [...members,doc.data()]
+                setMembers(membersList)
+                console.log(members);
+            }
+        })
+});
+    
+    }
+   
+
     return (
-        <div style={{position:'relative', top: '80px',width:'95vw'}}>
-            <img src={Cover} alt="Cover photo" style={{height:'300px',width:'100%'}}/>
+        <>
+        {
+            project &&
+            <div style={{position:'relative', top: '80px',width:'95vw'}}>
+            <img src={ project.proj_img} alt="Cover photo" style={{height:'300px',width:'100%'}}/>
             <div style={{display:'flex',justifyContent:'center',marginTop:'20px'}}>
-            <h3>Project Title</h3>
+            <h3>{project.proj_name}</h3>
             </div>
             
             <div style={{marginTop:'30px'}}>
             <p className="head">Description</p>
             <p>
-            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+            {project.proj_desc}
             </p>
             </div>
             <div style={{marginTop:'30px'}}>
             <p className="head">Created By</p>
-            <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
+            {
+                creator && 
+                <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
              <ListItem>
                  <ListItemAvatar>
-                      <Avatar>
-                          <PersonIcon />
-                         </Avatar>
+                      <Avatar src={creator.photoUrl} />
+                          
                      </ListItemAvatar>
-                     <ListItemText primary="Naman Suthar" secondary="Sept 9, 2021" />
+                     <ListItemText primary= {creator.name} secondary="Sept 9, 2021" />
                 </ListItem>
      
              </List>
+            }
+            
             </div>
             <div style={{marginTop:'30px'}}>
             <p className="head">Members</p>
-            <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper'}}>
-             <ListItem>
+                <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper'}}>
+            {
+                members.map(member => {
+                    (
+                        <ListItem>
                  <ListItemAvatar>
                       <Avatar>
                           <PersonIcon />
                          </Avatar>
                      </ListItemAvatar>
-                     <ListItemText primary="Akash Kulal" secondary="Sept 10, 2021" />
+                     <ListItemText primary={member.name} secondary="Sept 10, 2021" />
                 </ListItem>
-                <ListItem >
-                 <ListItemAvatar>
-                      <Avatar>
-                          <PersonIcon />
-                         </Avatar>
-                     </ListItemAvatar>
-                     <ListItemText primary="Sushant Singh" secondary="Sept 10, 2021" />
-                </ListItem>
-                <ListItem>
-                 <ListItemAvatar>
-                      <Avatar>
-                          <PersonIcon />
-                         </Avatar>
-                     </ListItemAvatar>
-                     <ListItemText primary="Mahendra Singh" secondary="Sept 11, 2021" />
-                </ListItem>
+                    )
+                })
+            }
+           
              </List>
+            
+            
             </div>
             <div style={{display:'flex',justifyContent:'center',marginTop:'20px'}}>
                 <div className="w-50">
@@ -68,7 +110,9 @@ const ProjectDesc = () => {
             </div>
 
         </div>
-    )
+        }
+        </>
+        )
 }
 
 export default ProjectDesc

@@ -25,7 +25,7 @@ function App() {
                 <Route path="/profile" exact component={Profile} />
                 <Route path="/search" exact component={Search} />
                 <Route path="/create_project" exact component={CreateProject} />
-                <Route path="/project_desc" exact component={ProjectDesc} />
+                <Route path="/project_desc/:proj_id" exact component={ProjectDesc} />
                 <Route path="/my_collabs" exact component={MyCollab} />
                
                 </Switch>

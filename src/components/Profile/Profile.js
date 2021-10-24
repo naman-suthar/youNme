@@ -3,25 +3,21 @@ import React, { useContext, useEffect, useState } from 'react'
 import logo from '../../images/youNme_Logo.png'
 import Header from '../Home/Main/Header'
 import Gallery from './Gallery/Gallery'
-import axios from 'axios'
+import { collection ,getDocs} from 'firebase/firestore'
 import { UserContext } from '../../context/UserContext'
+import { projectFirestore } from '../firebase/Firestorage'
+import SingleDetail from './SingleDetail'
 function Profile() {
     const [ user,setUser] = useContext(UserContext);
     const [profile,setProfile] = useState({});
-    let profArr;
-    const getProfile = () =>{
-        axios.get("http://localhost:5000/profiles")
-        .then((res => {
-            console.log(res.data)
-            profArr = res.data
-            profArr.map(profile => {
-                if(profile.name === user.displayName){
-                    setProfile(profile);
-                }else{
-                    console.log("I am not that");
-                }
-            })
-        }))
+    const userCollectionRef = collection(projectFirestore,"users") 
+    const getProfile =async () =>{
+        const data = await getDocs(userCollectionRef);
+        data.docs.forEach(doc => {
+            if(doc.id === user.uid){
+                setProfile(doc.data());
+            }
+        })
     }
     useEffect(()=>{
         getProfile()
@@ -48,12 +44,11 @@ function Profile() {
                 
             <div style={{display:'flex',flexDirection:'column',justifyItem:'center',alignItems:'center',marginTop:'5vh',color:'black'}}>
                 <h2>{profile.name}</h2>
-                <Typography >{profile.profession} </Typography>
-                <Typography>{profile.age}</Typography>
-                <Typography>{profile.city}</Typography>
-                    <Typography className="mt-3">
-                        {profile.about}
-                </Typography>
+                <SingleDetail title={"AGE"} detail={profile.age || 21}/>
+                <SingleDetail title={"PROFESSION"} detail={profile.profession || "Dancer"}/>
+                <SingleDetail title={"CITY"} detail={profile.city || "Udaipur"}/>
+                <SingleDetail title={"ABOUT"} detail={profile.about || "This is about me , I am an Android Developer"}/>
+               
             </div>
         </div>
         <div  style={{width:'55vw',marginLeft:'15vh'}}>

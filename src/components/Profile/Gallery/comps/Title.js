@@ -4,7 +4,7 @@ const Title = () => {
   return (
     <div className="title">
       
-      <h2>Your Pictures</h2>
+      <h1>Photos</h1>
     </div>
   )
 }

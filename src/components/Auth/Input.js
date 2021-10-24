@@ -1,13 +1,14 @@
 import { Grid, IconButton, InputAdornment, TextField } from '@material-ui/core'
-import React from 'react'
+import React, { forwardRef } from 'react'
 import Visibility from '@material-ui/icons/Visibility'
 import VisibilityOff from '@material-ui/icons/VisibilityOff'
 
 
-function Input({ value,name,handleChange, label, half, autoFocus, type, handleShowPassword,placeholder}) {
+const Input =forwardRef( ({ value,name,handleChange, label, half, autoFocus, type, handleShowPassword,placeholder},ref) => {
     return (
         <Grid item xs={12} sm={half ? 6:12}>
             <TextField
+            ref={ref}
                 value={value}
                 placeholder={placeholder}
                 name={name}
@@ -30,6 +31,6 @@ function Input({ value,name,handleChange, label, half, autoFocus, type, handleSh
             />
         </Grid>
     )
-}
+})
 
 export default Input

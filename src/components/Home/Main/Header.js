@@ -1,8 +1,6 @@
-import React,{useState} from 'react'
+import React from 'react'
 import './Header.css'
 import AddIcon from '@material-ui/icons/Add';
-import CreateProject from './CreateProject';
-import CreatePost from './CreatePost';
 import { Link } from 'react-router-dom';
 import { Button } from '@material-ui/core';
 function Header() {
